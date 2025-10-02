@@ -1,24 +1,38 @@
 #include <Arduino.h>
 #include <OneButton.h>
 
-#define BUTTON_PIN 18  // chân nút nhấn
-#define LED_PIN 23      // LED ngoài (chân GPIO2 trên ESP32)
+#define BUTTON_PIN 18
+#define LED_PIN    23
 
-OneButton button(BUTTON_PIN, true); // true = dùng INPUT_PULLUP
-
+OneButton button(BUTTON_PIN, true);  // true = dùng INPUT_PULLUP
 bool ledState = false;
+bool blinkMode = false;
 
-void singleClick() {
+void handleClick() {
+  // Single click: ON/OFF LED
+  blinkMode = false;
   ledState = !ledState;
   digitalWrite(LED_PIN, ledState ? HIGH : LOW);
 }
 
+void handleDoubleClick() {
+  // Double click: bật/tắt chế độ nhấp nháy
+  blinkMode = !blinkMode;
+}
+
 void setup() {
   pinMode(LED_PIN, OUTPUT);
-
-  button.attachClick(singleClick);
+  button.attachClick(handleClick);
+  button.attachDoubleClick(handleDoubleClick);
 }
 
 void loop() {
-  button.tick(); // phải gọi liên tục
+  button.tick();
+
+  if (blinkMode) {
+    digitalWrite(LED_PIN, HIGH);
+    delay(300);
+    digitalWrite(LED_PIN, LOW);
+    delay(300);
+  }
 }
