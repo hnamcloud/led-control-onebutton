@@ -1,0 +1,29 @@
+# Dự án: Điều khiển LED bằng nút nhấn sử dụng thư viện OneButton
+
+## 1. Giới thiệu
+Dự án minh họa cách sử dụng thư viện [OneButton](https://github.com/mathertel/OneButton) để điều khiển LED bằng nút nhấn duy nhất với nhiều chế độ khác nhau trong môi trường **PlatformIO + Visual Studio Code**:
+- **Single Click:** Bật/Tắt LED.
+- **Double Click:** Bật/tắt chế độ LED nhấp nháy.
+
+## 2. Yêu cầu phần cứng
+- ESP32 Devkit v1 (hoặc Arduino Uno/Nano cũng được, nhưng code này test trên ESP32).  
+- 1 nút nhấn (Button).  
+- 1 LED + điện trở hạn dòng 220Ω.  
+- Breadboard + dây nối.  
+
+## 3. Sơ đồ nối dây (ví dụ với ESP32)
+- Nút nhấn → GPIO 18 
+- LED → GPIO 23.  
+- GND chung.  
+
+## 4. Cài đặt môi trường
+1. Cài **Visual Studio Code**.  
+2. Cài **PlatformIO IDE** 
+3. Tạo project mới cho board ESP32 Devkit v1.  
+4. Cài thư viện **OneButton** trong `platformio.ini`:  
+
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_deps = mathertel/OneButton
